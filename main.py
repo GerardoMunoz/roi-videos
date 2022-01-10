@@ -1,3 +1,4 @@
+
 import numpy as np
 import cv2
 from sys import getsizeof
@@ -53,6 +54,26 @@ print('creado el arreglo de numpy')
 print('sus dimensiones son: num frames, alto, ancho, colores(RGB)', video.shape)
 print('ocupa en memoria', getsizeof(video), 'bytes')
 
+# Se crea un callback para determinar las dimensiones del rectángulo
+# definido con el mouse mediante el drag 
+drawing = False
+ix, iy = -1, -1
+jx, jy = -1, -1
+def draw_rect(event, x, y, flags, param):
+    global ix, iy, jx, jy, drawing
+    if event == cv2.EVENT_LBUTTONDOWN:
+        drawing = True
+        ix, iy = x, y
+    elif event == cv2.EVENT_MOUSEMOVE:
+        jx, jy = x, y
+    elif event == cv2.EVENT_LBUTTONUP:
+        drawing = False
+        roi = video[indice, iy:jy, ix:jx, :]
+        print('roi', roi.shape, ix, jx, iy, jy)
+        cv2.imwrite("roi.png", roi)
+cv2.namedWindow('image')
+cv2.setMouseCallback('image', draw_rect)
+
 
 
 
@@ -61,7 +82,10 @@ print('ocupa en memoria', getsizeof(video), 'bytes')
 indice = 0
 max_indice = video.shape[0] - 1
 while(1):
-    cv2.imshow('image', np.copy(video[indice, ...]))
+    img = np.copy(video[indice, ...])
+    if drawing == True:
+        cv2.rectangle(img, (ix, iy), (jx, jy), (0, 0, 255), 2)
+    cv2.imshow('image', img)
     k = cv2.waitKey(int(1000/fps))
     if k == ord('d'):
         indice += 1
