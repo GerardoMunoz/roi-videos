@@ -3,6 +3,7 @@
 El objetivo de esta herramienta en Python es ubicar regiones de interés (ROI) en videos
 
 En este caso, la región de interés será el interior de un rectángulo que resalta una parte de un fotograma (*frame*) del video.
+
 Un punto de partida para este proyecto es la documentación de OpenCv https://docs.opencv.org/4.x/d6/d00/tutorial_py_root.html. En particular los siguientes ejemplos (es necesario volver a colocar los tabuladores en los ejemplos):
 * Para leer videos. https://docs.opencv.org/4.x/dd/d43/tutorial_py_video_display.html
 ```import numpy as np
