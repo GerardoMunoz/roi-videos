@@ -1,3 +1,5 @@
+# Ejercicio, comentar el código y adaptarlo a sus nececidades
+
 import tkinter as tk
 from  tkinter import ttk
 import cv2 as cv
